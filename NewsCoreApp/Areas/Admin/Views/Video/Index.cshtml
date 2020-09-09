@@ -1,0 +1,71 @@
+﻿@{
+    ViewData["Title"] = "Index";
+}
+@section Scripts{
+    <script src="~/app/controllers/video/index.js"></script>
+    <script>
+        var video = new videoController();
+        video.initialize();
+    </script>
+}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Video
+        <small>Danh sách video</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li class="active">Danh sách video</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Tất cả Video</h3>
+                    <div class="box-tools">
+                        <button id="btnCreate" class="btn btn-default"><i class="fa fa-plus"></i>Thêm mới</button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table table-bordered" id="tbl-list">
+                        <thead>
+                            <tr>
+                                <th style="width: 100px">#</th>
+                                <th>Tiêu đề</th>
+                                <th>Đường dẫn</th>
+                                <th>Ngày tạo</th>
+                                <th style="width: 40px">Trạng thái</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbl-content"></tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+                <!--Pagination-->
+                <div id="pagingSection" class="box-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- /.content -->
+<script id="table-template" type="x-tmpl-mustache">
+    <tr>
+        <th scope="row">
+            <button class="btn btn-default btn-sm btn-edit" data-id="{{Id}}"><i class="fa fa-pencil"></i></button>
+            <button class="btn btn-danger btn-sm btn-delete" data-id="{{Id}}"><i class="fa fa-trash"></i></button>
+        </th>
+        <td>{{Title}}</td>
+        <td>{{VideoUrl}}</td>
+        <td>{{CreatedDate}}</td>
+        <td>{{{Status}}}</td>
+    </tr>
+</script>
+@Html.Partial("_AddEditModal.cshtml")

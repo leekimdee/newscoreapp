@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewData["Title"] = "Thư viện hình";
+}
+
+@section Styles{
+    <link href="~/lib/lightgallery/dist/css/lightgallery.css" rel="stylesheet" />
+    <style type="text/css">
+        .img-thumb {
+            width: 180px;
+            height: 126px;
+            margin: 1px;
+        }
+
+        #lightgallery {
+            margin-top: 15px;
+        }
+    </style>
+}
+
+@section Scripts{
+    <script src="~/lib/lightgallery/dist/js/lightgallery.js"></script>
+    <script src="~/lib/jquery-mousewheel/jquery.mousewheel.js"></script>
+    <script src="~/lib/lightgallery/modules/lg-fullscreen.js"></script>
+    <script src="~/lib/lightgallery/modules/lg-thumbnail.js"></script>
+    <script src="~/js/controllers/image/index.js"></script>
+    <script type="text/javascript">
+        var image = new imageController();
+        image.initialize();
+    </script>
+}
+
+<h1>Thư viện hình</h1>
+
+<div class="row">
+    <div class="col-md-1 align-middle">
+        Album
+    </div>
+    <div class="col-md-5">
+        @Html.DropDownList("ImageAlbumId", new SelectList(ViewBag.ImageAlbums, "Id", "Title", ""), new { @class = "form-control" })
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12" id="lightgallery">
+
+    </div>
+</div>

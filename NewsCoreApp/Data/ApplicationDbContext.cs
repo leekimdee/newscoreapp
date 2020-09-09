@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using NewsCoreApp.Data.Entities;
 
 namespace NewsCoreApp.Data
 {
@@ -12,5 +13,9 @@ namespace NewsCoreApp.Data
             : base(options)
         {
         }
+
+        public DbSet<Image> Images { get; set; }
+        public DbSet<ImageAlbum> ImageAlbums { get; set; }
+        public DbSet<Video> Videos { get; set; }
     }
 }

@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using NewsCoreApp.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json.Serialization;
 
 namespace NewsCoreApp
 {
@@ -21,6 +22,12 @@ namespace NewsCoreApp
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+        }
+
+        public static string ConnectionString
+        {
+            get;
+            private set;
         }
 
         public IConfiguration Configuration { get; }
@@ -41,6 +48,8 @@ namespace NewsCoreApp
             services.AddDefaultIdentity<IdentityUser>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddMvc().AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
@@ -71,7 +80,13 @@ namespace NewsCoreApp
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+
+                routes.MapRoute(
+                    name: "areaRoute",
+                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
             });
+
+            ConnectionString = Configuration.GetConnectionString("DefaultConnection");
         }
     }
 }

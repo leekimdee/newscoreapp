@@ -1,0 +1,54 @@
+﻿<div id="modal-add-multi" class="bootbox modal fade modal-darkorange in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="bootbox-close-button close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Thêm nhiều ảnh</h4>
+            </div>
+            <div class="modal-body">
+                <div id="horizontal-form">
+                    <form class="form-horizontal" role="form" id="frmAddMulti" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label no-padding-right">Album</label>
+                            <div class="col-sm-10">
+                                <select name="ddlAlbumIdMulti" id="ddlAlbumId-Multi" class="form-control"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="txtImage-Multi" class="col-sm-2 control-label no-padding-right">Image</label>
+                            <div class="col-sm-6">
+
+                                <span class="input-group-btn">
+                                    <input type="button" id="btnSelectImg-Multi" class="btn btn-default" value="Browser" />
+                                </span>
+                                <input type="file" name="fileInputImageMulti" id="fileInputImage-Multi" multiple style="display:none;" />
+                                @*<div class="input-group">
+            <input type="text" name="txtImage-Multi" class="form-control" id="txtImage-Multi" />
+
+        </div>*@
+                                <span id="filePathList"></span>
+                                <input type="hidden" id="hidImageUrlList" value="" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" checked="checked" id="ckStatus-Multi">
+                                        <span class="text">Kích hoạt.</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="button" id="btnSave-Multi" class="btn btn-success">Lưu thay đổi</button>
+                                <button type="button" id="btnCancel-Multi" data-dismiss="modal" class="btn btn-danger">Thoát</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
