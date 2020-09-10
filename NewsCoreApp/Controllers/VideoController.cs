@@ -4,16 +4,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using NewsCoreApp.Application;
+using NewsCoreApp.Application.Interfaces;
+using NewsCoreApp.Data;
 
 namespace NewsCoreApp.Controllers
 {
     public class VideoController : Controller
     {
-        private VideoService _videoService;
+        private IVideoService _videoService;
 
-        public VideoController()
+        public VideoController(IVideoService videoService)
         {
-            _videoService = new VideoService();
+            _videoService = videoService;
         }
 
         public IActionResult Index()

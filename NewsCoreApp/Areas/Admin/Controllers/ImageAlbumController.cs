@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using NewsCoreApp.Application;
+using NewsCoreApp.Application.Interfaces;
+using NewsCoreApp.Data;
 using NewsCoreApp.Data.Entities;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +11,11 @@ namespace NewsCoreApp.Areas.Admin.Controllers
 {
     public class ImageAlbumController : BaseController
     {
-        private ImageAlbumService _imageAlbumService;
+        private IImageAlbumService _imageAlbumService;
 
-        public ImageAlbumController()
+        public ImageAlbumController(IImageAlbumService imageAlbumService)
         {
-            _imageAlbumService = new ImageAlbumService();
+            _imageAlbumService = imageAlbumService;
         }
 
         public IActionResult Index()

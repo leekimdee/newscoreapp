@@ -11,19 +11,6 @@ namespace NewsCoreApp.Data.Entities
 {
     public class Image: DomainEntity<int>
     {
-        public Image()
-        {
-
-        }
-
-        public Image(string title, string imageUrl, int albumId, Status status)
-        {
-            Title = title;
-            ImageUrl = imageUrl;
-            ImageAlbumId = albumId;
-            Status = status;
-        }
-
         [StringLength(255)]
         [Required]
         public string Title { get; set; }

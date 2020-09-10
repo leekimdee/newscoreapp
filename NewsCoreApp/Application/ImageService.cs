@@ -1,6 +1,10 @@
-﻿using NewsCoreApp.Data.EF;
+﻿using NewsCoreApp.Application.Interfaces;
+using NewsCoreApp.Data;
+using NewsCoreApp.Data.EF;
 using NewsCoreApp.Data.Entities;
 using NewsCoreApp.Data.Enums;
+using NewsCoreApp.Data.Interfaces;
+using NewsCoreApp.Data.IRepositories;
 using NewsCoreApp.Utilities;
 using System;
 using System.Collections.Generic;
@@ -9,15 +13,15 @@ using System.Threading.Tasks;
 
 namespace NewsCoreApp.Application
 {
-    public class ImageService
+    public class ImageService : IImageService
     {
-        private EFRepository<Image, int> _imageRepository;
-        private EFUnitOfWork _unitOfWork;
+        private IImageRepository _imageRepository;
+        private IUnitOfWork _unitOfWork;
 
-        public ImageService()
+        public ImageService(IImageRepository imageRepository, IUnitOfWork unitOfWork)
         {
-            _imageRepository = new EFRepository<Image, int>();
-            _unitOfWork = new EFUnitOfWork();
+            _imageRepository = imageRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public Image Add(Image image)
@@ -47,7 +51,7 @@ namespace NewsCoreApp.Application
 
         public PagedResult<Image> GetAllPaging(string keyword, int page, int pageSize)
         {
-            var query = _imageRepository.FindAll(x => x.Status == Status.Active, i=>i.ImageAlbum);
+            var query = _imageRepository.FindAll(x => x.Status == Status.Active, i => i.ImageAlbum);
             if (!string.IsNullOrEmpty(keyword))
                 query = query.Where(x => x.Title.Contains(keyword));
 

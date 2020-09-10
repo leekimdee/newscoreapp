@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using NewsCoreApp.Data.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,16 +8,21 @@ using System.Linq.Expressions;
 
 namespace NewsCoreApp.Data.EF
 {
-    public class EFRepository<T, K> : IDisposable where T : DomainEntity<K>
+    public class EFRepository<T, K> : IRepository<T, K>, IDisposable where T : DomainEntity<K>
     {
         private readonly ApplicationDbContext _context;
 
-        public EFRepository()
+        //public EFRepository()
+        //{
+        //    //string connectionString = Startup.ConnectionString;
+        //    //var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+        //    //optionsBuilder.UseSqlServer("Server=DUYLK\\SQLEXPRESS_2012;Database=LkdCoreApp;Trusted_Connection=True;MultipleActiveResultSets=true");
+        //    //_context = new ApplicationDbContext(optionsBuilder.Options);
+        //}
+
+        public EFRepository(ApplicationDbContext context)
         {
-            string connectionString = Startup.ConnectionString;
-            var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
-            optionsBuilder.UseSqlServer(connectionString);
-            _context = new ApplicationDbContext(optionsBuilder.Options);
+            _context = context;
         }
 
         public void Add(T entity)

@@ -204,7 +204,7 @@
                 type: "POST",
                 url: "/Admin/Image/SaveMulti",
                 data: {
-                    imageListVm: images
+                    imageList: images
                 },
                 dataType: "json",
                 beforeSend: function () {
@@ -251,32 +251,6 @@
             });
         });
     });
-
-    function initDropDownAlbum(selectedId) {
-        $.ajax({
-            url: "/Admin/ImageAlbum/GetAll",
-            type: 'GET',
-            dataType: 'json',
-            async: false,
-            success: function (response) {
-                var data = [];
-                $.each(response, function (i, item) {
-                    data.push({
-                        id: item.Id,
-                        text: item.Title,
-                        sortOrder: item.SortOrder
-                    });
-                });
-                //var arr = lkd.unflattern(data);
-                //$('#ddlCategoryIdM').combotree({
-                //    data: arr
-                //});
-                //if (selectedId != undefined) {
-                //    $('#ddlCategoryIdM').combotree('setValue', selectedId);
-                //}
-            }
-        });
-    }
 
     function resetFormMaintainance() {
         $('#hidId').val(0);
@@ -355,8 +329,10 @@
                     loadData();
                 }, isPageChanged);
             },
-            error: function (status) {
+            error: function (xhr, status, error) {
                 console.log(status);
+                var err = eval("(" + xhr.responseText + ")");
+                console.log(err.Message);
                 lkd.notify('Cannot loading data', 'error');
             }
         })

@@ -10,18 +10,6 @@ namespace NewsCoreApp.Data.Entities
 {
     public class ImageAlbum: DomainEntity<int>
     {
-        public ImageAlbum()
-        {
-            Images = new List<Image>();
-        }
-
-        public ImageAlbum(string title, int sortOrder, Status status)
-        {
-            Title = title;
-            SortOrder = sortOrder;
-            Status = status;
-        }
-
         [StringLength(255)]
         [Required]
         public string Title { get; set; }

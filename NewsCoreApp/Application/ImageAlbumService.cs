@@ -1,7 +1,10 @@
-﻿using NewsCoreApp.Data;
+﻿using NewsCoreApp.Application.Interfaces;
+using NewsCoreApp.Data;
 using NewsCoreApp.Data.EF;
 using NewsCoreApp.Data.Entities;
 using NewsCoreApp.Data.Enums;
+using NewsCoreApp.Data.Interfaces;
+using NewsCoreApp.Data.IRepositories;
 using NewsCoreApp.Utilities;
 using System;
 using System.Collections.Generic;
@@ -9,15 +12,15 @@ using System.Linq;
 
 namespace NewsCoreApp.Application
 {
-    public class ImageAlbumService
+    public class ImageAlbumService : IImageAlbumService
     {
-        private EFRepository<ImageAlbum, int> _imageAlbumRepository;
-        private EFUnitOfWork _unitOfWork;
+        private IImageAlbumRepository _imageAlbumRepository;
+        private IUnitOfWork _unitOfWork;
 
-        public ImageAlbumService()
+        public ImageAlbumService(IImageAlbumRepository imageAlbumRepository, IUnitOfWork unitOfWork)
         {
-            _imageAlbumRepository = new EFRepository<ImageAlbum, int>();
-            _unitOfWork = new EFUnitOfWork();
+            _imageAlbumRepository = imageAlbumRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public ImageAlbum Add(ImageAlbum imageAlbum)

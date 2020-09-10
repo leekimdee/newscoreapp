@@ -14,6 +14,12 @@ using NewsCoreApp.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Serialization;
+using NewsCoreApp.Data.Interfaces;
+using NewsCoreApp.Data.EF;
+using NewsCoreApp.Data.IRepositories;
+using NewsCoreApp.Data.Repositories;
+using NewsCoreApp.Application.Interfaces;
+using NewsCoreApp.Application;
 
 namespace NewsCoreApp
 {
@@ -22,12 +28,6 @@ namespace NewsCoreApp
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-        }
-
-        public static string ConnectionString
-        {
-            get;
-            private set;
         }
 
         public IConfiguration Configuration { get; }
@@ -49,7 +49,21 @@ namespace NewsCoreApp
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddMvc().AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
+            services.AddMvc().AddJsonOptions(options =>
+            {
+                options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+                options.SerializerSettings.ReferenceLoopHandling= Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            });
+
+            services.AddTransient<IUnitOfWork, EFUnitOfWork>();
+
+            services.AddTransient<IImageAlbumRepository, ImageAlbumRepository>();
+            services.AddTransient<IImageRepository, ImageRepository>();
+            services.AddTransient<IVideoRepository, VideoRepository>();
+
+            services.AddTransient<IImageAlbumService, ImageAlbumService>();
+            services.AddTransient<IImageService, ImageService>();
+            services.AddTransient<IVideoService, VideoService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
@@ -85,8 +99,6 @@ namespace NewsCoreApp
                     name: "areaRoute",
                     template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
             });
-
-            ConnectionString = Configuration.GetConnectionString("DefaultConnection");
         }
     }
 }

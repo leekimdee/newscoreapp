@@ -4,18 +4,20 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using NewsCoreApp.Application;
+using NewsCoreApp.Application.Interfaces;
+using NewsCoreApp.Data;
 
 namespace NewsCoreApp.Controllers
 {
     public class ImageController : Controller
     {
-        private ImageService _imageService;
-        private ImageAlbumService _imageAlbumService;
+        private IImageService _imageService;
+        private IImageAlbumService _imageAlbumService;
 
-        public ImageController()
+        public ImageController(IImageService imageService, IImageAlbumService imageAlbumService)
         {
-            _imageService = new ImageService();
-            _imageAlbumService = new ImageAlbumService();
+            _imageService = imageService;
+            _imageAlbumService = imageAlbumService;
         }
 
         public IActionResult Index()
