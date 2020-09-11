@@ -1,28 +1,26 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using NewsCoreApp.Data.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 
 namespace NewsCoreApp.Data.EF
 {
-    public class EFRepository<T, K> : IRepository<T, K>, IDisposable where T : DomainEntity<K>
+    public class EFRepository<T, K> : IDisposable where T : DomainEntity<K>
     {
         private readonly ApplicationDbContext _context;
 
-        //public EFRepository()
-        //{
-        //    //string connectionString = Startup.ConnectionString;
-        //    //var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
-        //    //optionsBuilder.UseSqlServer("Server=DUYLK\\SQLEXPRESS_2012;Database=LkdCoreApp;Trusted_Connection=True;MultipleActiveResultSets=true");
-        //    //_context = new ApplicationDbContext(optionsBuilder.Options);
-        //}
-
-        public EFRepository(ApplicationDbContext context)
+        public EFRepository()
         {
-            _context = context;
+            IConfiguration configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json").Build();
+            var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
+            var connectionString = configuration.GetConnectionString("DefaultConnection");
+            builder.UseSqlServer(connectionString);
+            _context = new ApplicationDbContext(builder.Options);
         }
 
         public void Add(T entity)

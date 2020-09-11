@@ -7,45 +7,45 @@ using System.Linq;
 
 namespace NewsCoreApp.Application
 {
-    public class ImageService
+    public class FeedbackService
     {
-        private EFRepository<Image, int> _imageRepository;
+        private EFRepository<Feedback, int> _feedbackRepository;
         private EFUnitOfWork _unitOfWork;
 
-        public ImageService()
+        public FeedbackService()
         {
-            _imageRepository = new EFRepository<Image, int>();
+            _feedbackRepository = new EFRepository<Feedback, int>();
             _unitOfWork = new EFUnitOfWork();
         }
 
-        public Image Add(Image image)
+        public Feedback Add(Feedback feedback)
         {
-            _imageRepository.Add(image);
-            return image;
+            _feedbackRepository.Add(feedback);
+            return feedback;
         }
 
         public void Delete(int id)
         {
-            _imageRepository.Remove(id);
+            _feedbackRepository.Remove(id);
         }
 
-        public List<Image> GetAll()
+        public List<Feedback> GetAll()
         {
-            return _imageRepository.FindAll().OrderBy(x => x.Id).ToList();
+            return _feedbackRepository.FindAll().OrderBy(x => x.Id).ToList();
         }
 
-        public List<Image> GetAll(string keyword)
+        public List<Feedback> GetAll(string keyword)
         {
             if (!string.IsNullOrEmpty(keyword))
-                return _imageRepository.FindAll(x => x.Title.Contains(keyword))
+                return _feedbackRepository.FindAll(x => x.Title.Contains(keyword))
                     .OrderBy(x => x.Id).ToList();
             else
-                return _imageRepository.FindAll().OrderBy(x => x.Id).ToList();
+                return _feedbackRepository.FindAll().OrderBy(x => x.Id).ToList();
         }
 
-        public PagedResult<Image> GetAllPaging(string keyword, int page, int pageSize)
+        public PagedResult<Feedback> GetAllPaging(string keyword, int page, int pageSize)
         {
-            var query = _imageRepository.FindAll(x => x.Status == Status.Active, i => i.ImageAlbum);
+            var query = _feedbackRepository.FindAll(x => x.Status == Status.Active);
             if (!string.IsNullOrEmpty(keyword))
                 query = query.Where(x => x.Title.Contains(keyword));
 
@@ -56,7 +56,7 @@ namespace NewsCoreApp.Application
 
             var data = query.ToList();
 
-            var paginationSet = new PagedResult<Image>()
+            var paginationSet = new PagedResult<Feedback>()
             {
                 Results = data,
                 CurrentPage = page,
@@ -66,14 +66,9 @@ namespace NewsCoreApp.Application
             return paginationSet;
         }
 
-        public Image GetById(int id)
+        public Feedback GetById(int id)
         {
-            return _imageRepository.FindById(id);
-        }
-
-        public List<Image> GetImagesByAlbumId(int albumId)
-        {
-            return _imageRepository.FindAll(f => f.ImageAlbumId == albumId).ToList();
+            return _feedbackRepository.FindById(id);
         }
 
         public void Save()
@@ -81,9 +76,9 @@ namespace NewsCoreApp.Application
             _unitOfWork.Commit();
         }
 
-        public void Update(Image image)
+        public void Update(Feedback feedback)
         {
-            _imageRepository.Update(image);
+            _feedbackRepository.Update(feedback);
         }
     }
 }

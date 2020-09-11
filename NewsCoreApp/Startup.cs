@@ -1,25 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using NewsCoreApp.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NewsCoreApp.Data;
 using Newtonsoft.Json.Serialization;
-using NewsCoreApp.Data.Interfaces;
-using NewsCoreApp.Data.EF;
-using NewsCoreApp.Data.IRepositories;
-using NewsCoreApp.Data.Repositories;
-using NewsCoreApp.Application.Interfaces;
-using NewsCoreApp.Application;
 
 namespace NewsCoreApp
 {
@@ -52,18 +41,8 @@ namespace NewsCoreApp
             services.AddMvc().AddJsonOptions(options =>
             {
                 options.SerializerSettings.ContractResolver = new DefaultContractResolver();
-                options.SerializerSettings.ReferenceLoopHandling= Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             });
-
-            services.AddTransient<IUnitOfWork, EFUnitOfWork>();
-
-            services.AddTransient<IImageAlbumRepository, ImageAlbumRepository>();
-            services.AddTransient<IImageRepository, ImageRepository>();
-            services.AddTransient<IVideoRepository, VideoRepository>();
-
-            services.AddTransient<IImageAlbumService, ImageAlbumService>();
-            services.AddTransient<IImageService, ImageService>();
-            services.AddTransient<IVideoService, VideoService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

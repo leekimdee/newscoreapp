@@ -7,13 +7,13 @@ using System.Linq;
 
 namespace NewsCoreApp.Areas.Admin.Controllers
 {
-    public class ImageAlbumController : BaseController
+    public class FeedbackController : BaseController
     {
-        private ImageAlbumService _imageAlbumService;
+        private FeedbackService _feedbackService;
 
-        public ImageAlbumController()
+        public FeedbackController()
         {
-            _imageAlbumService = new ImageAlbumService();
+            _feedbackService = new FeedbackService();
         }
 
         public IActionResult Index()
@@ -26,19 +26,19 @@ namespace NewsCoreApp.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var model = _imageAlbumService.GetAll();
+            var model = _feedbackService.GetAll();
             return new OkObjectResult(model);
         }
 
         [HttpGet]
         public IActionResult GetAllPaging(string keyword, int page, int pageSize)
         {
-            var model = _imageAlbumService.GetAllPaging(keyword, page, pageSize);
+            var model = _feedbackService.GetAllPaging(keyword, page, pageSize);
             return new OkObjectResult(model);
         }
 
         [HttpPost]
-        public IActionResult SaveEntity(ImageAlbum imageAlbum)
+        public IActionResult SaveEntity(Feedback video)
         {
             if (!ModelState.IsValid)
             {
@@ -47,23 +47,23 @@ namespace NewsCoreApp.Areas.Admin.Controllers
             }
             else
             {
-                if (imageAlbum.Id == 0)
+                if (video.Id == 0)
                 {
-                    _imageAlbumService.Add(imageAlbum);
+                    _feedbackService.Add(video);
                 }
                 else
                 {
-                    _imageAlbumService.Update(imageAlbum);
+                    _feedbackService.Update(video);
                 }
-                _imageAlbumService.Save();
-                return new OkObjectResult(imageAlbum);
+                _feedbackService.Save();
+                return new OkObjectResult(video);
             }
         }
 
         [HttpGet]
         public IActionResult GetById(int id)
         {
-            var model = _imageAlbumService.GetById(id);
+            var model = _feedbackService.GetById(id);
 
             return new OkObjectResult(model);
         }
@@ -77,8 +77,8 @@ namespace NewsCoreApp.Areas.Admin.Controllers
             }
             else
             {
-                _imageAlbumService.Delete(id);
-                _imageAlbumService.Save();
+                _feedbackService.Delete(id);
+                _feedbackService.Save();
 
                 return new OkObjectResult(id);
             }

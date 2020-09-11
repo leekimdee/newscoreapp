@@ -1,21 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using NewsCoreApp.Application;
-using NewsCoreApp.Application.Interfaces;
-using NewsCoreApp.Data;
 
 namespace NewsCoreApp.Controllers
 {
     public class VideoController : Controller
     {
-        private IVideoService _videoService;
+        private VideoService _videoService;
 
-        public VideoController(IVideoService videoService)
+        public VideoController()
         {
-            _videoService = videoService;
+            _videoService = new VideoService();
         }
 
         public IActionResult Index()

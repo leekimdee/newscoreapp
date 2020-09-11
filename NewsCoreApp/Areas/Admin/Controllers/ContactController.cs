@@ -7,13 +7,13 @@ using System.Linq;
 
 namespace NewsCoreApp.Areas.Admin.Controllers
 {
-    public class ImageAlbumController : BaseController
+    public class ContactController : BaseController
     {
-        private ImageAlbumService _imageAlbumService;
+        private ContactService _contactService;
 
-        public ImageAlbumController()
+        public ContactController()
         {
-            _imageAlbumService = new ImageAlbumService();
+            _contactService = new ContactService();
         }
 
         public IActionResult Index()
@@ -26,19 +26,19 @@ namespace NewsCoreApp.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var model = _imageAlbumService.GetAll();
+            var model = _contactService.GetAll();
             return new OkObjectResult(model);
         }
 
         [HttpGet]
         public IActionResult GetAllPaging(string keyword, int page, int pageSize)
         {
-            var model = _imageAlbumService.GetAllPaging(keyword, page, pageSize);
+            var model = _contactService.GetAllPaging(keyword, page, pageSize);
             return new OkObjectResult(model);
         }
 
         [HttpPost]
-        public IActionResult SaveEntity(ImageAlbum imageAlbum)
+        public IActionResult SaveEntity(Contact contact)
         {
             if (!ModelState.IsValid)
             {
@@ -47,29 +47,29 @@ namespace NewsCoreApp.Areas.Admin.Controllers
             }
             else
             {
-                if (imageAlbum.Id == 0)
+                if (string.IsNullOrEmpty(contact.Id))
                 {
-                    _imageAlbumService.Add(imageAlbum);
+                    _contactService.Add(contact);
                 }
                 else
                 {
-                    _imageAlbumService.Update(imageAlbum);
+                    _contactService.Update(contact);
                 }
-                _imageAlbumService.Save();
-                return new OkObjectResult(imageAlbum);
+                _contactService.Save();
+                return new OkObjectResult(contact);
             }
         }
 
         [HttpGet]
-        public IActionResult GetById(int id)
+        public IActionResult GetById(string id)
         {
-            var model = _imageAlbumService.GetById(id);
+            var model = _contactService.GetById(id);
 
             return new OkObjectResult(model);
         }
 
         [HttpPost]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(string id)
         {
             if (!ModelState.IsValid)
             {
@@ -77,8 +77,8 @@ namespace NewsCoreApp.Areas.Admin.Controllers
             }
             else
             {
-                _imageAlbumService.Delete(id);
-                _imageAlbumService.Save();
+                _contactService.Delete(id);
+                _contactService.Save();
 
                 return new OkObjectResult(id);
             }

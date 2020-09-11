@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using NewsCoreApp.Application;
-using NewsCoreApp.Application.Interfaces;
-using NewsCoreApp.Data;
 using NewsCoreApp.Data.Entities;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +9,11 @@ namespace NewsCoreApp.Areas.Admin.Controllers
 {
     public class VideoController : BaseController
     {
-        private IVideoService _videoService;
+        private VideoService _videoService;
 
-        public VideoController(IVideoService videoService)
+        public VideoController()
         {
-            _videoService = videoService;
+            _videoService = new VideoService();
         }
 
         public IActionResult Index()

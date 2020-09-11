@@ -1,19 +1,22 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using NewsCoreApp.Data.Interfaces;
+using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace NewsCoreApp.Data.EF
 {
-    public class EFUnitOfWork: IUnitOfWork
+    public class EFUnitOfWork
     {
         private readonly ApplicationDbContext _context;
 
-        public EFUnitOfWork(ApplicationDbContext context)
+        public EFUnitOfWork()
         {
-            //string connectionString = Startup.ConnectionString;
-            //var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
-            //optionsBuilder.UseSqlServer(connectionString);
-            //_context = new ApplicationDbContext(optionsBuilder.Options);
-            _context = context;
+            IConfiguration configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json").Build();
+            var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
+            var connectionString = configuration.GetConnectionString("DefaultConnection");
+            builder.UseSqlServer(connectionString);
+            _context = new ApplicationDbContext(builder.Options);
         }
 
         public void Commit()
