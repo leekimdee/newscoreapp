@@ -12,15 +12,9 @@ namespace NewsCoreApp.Data.EF
     {
         private readonly ApplicationDbContext _context;
 
-        public EFRepository()
+        public EFRepository(DbFactory dbFactory)
         {
-            IConfiguration configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json").Build();
-            var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
-            var connectionString = configuration.GetConnectionString("DefaultConnection");
-            builder.UseSqlServer(connectionString);
-            _context = new ApplicationDbContext(builder.Options);
+            _context = dbFactory.context;
         }
 
         public void Add(T entity)
@@ -90,6 +84,11 @@ namespace NewsCoreApp.Data.EF
         public void Update(T entity)
         {
             _context.Set<T>().Update(entity);
+        }
+
+        public bool CheckExist(K id)
+        {
+            return _context.Set<T>().Any(x => x.Id.Equals(id));
         }
     }
 }

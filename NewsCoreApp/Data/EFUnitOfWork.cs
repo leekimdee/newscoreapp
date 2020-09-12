@@ -8,15 +8,9 @@ namespace NewsCoreApp.Data.EF
     {
         private readonly ApplicationDbContext _context;
 
-        public EFUnitOfWork()
+        public EFUnitOfWork(DbFactory dbFactory)
         {
-            IConfiguration configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json").Build();
-            var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
-            var connectionString = configuration.GetConnectionString("DefaultConnection");
-            builder.UseSqlServer(connectionString);
-            _context = new ApplicationDbContext(builder.Options);
+            _context = dbFactory.context;
         }
 
         public void Commit()

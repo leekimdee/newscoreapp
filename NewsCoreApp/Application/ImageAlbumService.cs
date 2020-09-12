@@ -1,4 +1,5 @@
-﻿using NewsCoreApp.Data.EF;
+﻿using NewsCoreApp.Data;
+using NewsCoreApp.Data.EF;
 using NewsCoreApp.Data.Entities;
 using NewsCoreApp.Data.Enums;
 using NewsCoreApp.Utilities;
@@ -15,8 +16,9 @@ namespace NewsCoreApp.Application
 
         public ImageAlbumService()
         {
-            _imageAlbumRepository = new EFRepository<ImageAlbum, int>();
-            _unitOfWork = new EFUnitOfWork();
+            DbFactory dbFactory = new DbFactory();
+            _imageAlbumRepository = new EFRepository<ImageAlbum, int>(dbFactory);
+            _unitOfWork = new EFUnitOfWork(dbFactory);
         }
 
         public ImageAlbum Add(ImageAlbum imageAlbum)

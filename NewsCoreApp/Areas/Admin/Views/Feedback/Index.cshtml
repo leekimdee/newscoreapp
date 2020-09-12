@@ -1,22 +1,22 @@
 ﻿@{
-    ViewData["Title"] = "Thông tin liên hệ";
+    ViewData["Title"] = "Index";
 }
 @section Scripts{
-    <script src="~/app/controllers/contact/index.js"></script>
+    <script src="~/app/controllers/feedback/index.js"></script>
     <script>
-        var contact = new contactController();
-        contact.initialize();
+        var feedback = new feedbackController();
+        feedback.initialize();
     </script>
 }
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        Liên hệ
-        <small>Thông tin liên hệ</small>
+        Phản hồi từ khách hàng
+        <small>Danh sách phản hồi</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
-        <li class="active">Liên hệ</li>
+        <li class="active">Danh sách phản hồi</li>
     </ol>
 </section>
 
@@ -26,10 +26,7 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Tất cả Thông tin liên hệ</h3>
-                    <div class="box-tools">
-                        <button id="btnCreate" class="btn btn-default"><i class="fa fa-plus"></i>Thêm mới</button>
-                    </div>
+                    <h3 class="box-title">Tất cả phản hồi</h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
@@ -37,13 +34,11 @@
                         <thead>
                             <tr>
                                 <th style="width: 100px">#</th>
-                                <th>Tên</th>
+                                <th>Tiêu đề</th>
+                                <th>Họ tên</th>
                                 <th>Điện thoại</th>
                                 <th>Email</th>
-                                <th>Website</th>
-                                <th>Địa chỉ</th>
-                                <th>Vĩ độ</th>
-                                <th>Kinh độ</th>
+                                <th>Ngày tạo</th>
                                 <th style="width: 40px">Trạng thái</th>
                             </tr>
                         </thead>
@@ -63,17 +58,15 @@
 <script id="table-template" type="x-tmpl-mustache">
     <tr>
         <th scope="row">
-            <button class="btn btn-default btn-sm btn-edit" data-id="{{Id}}"><i class="fa fa-pencil"></i></button>
+            <button class="btn btn-default btn-sm btn-detail" data-id="{{Id}}"><i class="fa fa-info"></i></button>
             <button class="btn btn-danger btn-sm btn-delete" data-id="{{Id}}"><i class="fa fa-trash"></i></button>
         </th>
+        <td>{{Title}}</td>
         <td>{{Name}}</td>
         <td>{{Phone}}</td>
         <td>{{Email}}</td>
-        <td>{{Website}}</td>
-        <td>{{Address}}</td>
-        <td>{{Lat}}</td>
-        <td>{{Lng}}</td>
+        <td>{{CreatedDate}}</td>
         <td>{{{Status}}}</td>
     </tr>
 </script>
-@Html.Partial("_AddEditModal.cshtml")
+@Html.Partial("_DetailModal.cshtml")

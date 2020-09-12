@@ -10,6 +10,7 @@
             ignore: [],
             lang: 'vi',
             rules: {
+                txtId: { required: true },
                 txtName: { required: true }
             }
         });
@@ -40,7 +41,7 @@
                 },
                 success: function (response) {
                     var data = response;
-                    $('#hidId').val(data.Id);
+                    $('#txtId').val(data.Id);
                     $('#txtName').val(data.Name);
                     $('#txtPhone').val(data.Phone);
                     $('#txtEmail').val(data.Email);
@@ -65,7 +66,7 @@
         $('#btnSave').on('click', function (e) {
             if ($('#frmMaintainance').valid()) {
                 e.preventDefault();
-                var id = $('#hidId').val();
+                var id = $('#txtId').val();
                 var name = $('#txtName').val();
                 var phone = $('#txtPhone').val();
                 var email = $('#txtEmail').val();
@@ -186,7 +187,7 @@
     }
 
     function resetFormMaintainance() {
-        $('#hidId').val("");
+        $('#txtId').val("");
         $('#txtName').val("");
         $('#txtPhone').val("");
         $('#txtEmail').val("");

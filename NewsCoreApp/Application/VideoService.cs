@@ -1,4 +1,5 @@
-﻿using NewsCoreApp.Data.EF;
+﻿using NewsCoreApp.Data;
+using NewsCoreApp.Data.EF;
 using NewsCoreApp.Data.Entities;
 using NewsCoreApp.Data.Enums;
 using NewsCoreApp.Utilities;
@@ -14,8 +15,9 @@ namespace NewsCoreApp.Application
 
         public VideoService()
         {
-            _videoRepository = new EFRepository<Video, int>();
-            _unitOfWork = new EFUnitOfWork();
+            DbFactory dbFactory = new DbFactory();
+            _videoRepository = new EFRepository<Video, int>(dbFactory);
+            _unitOfWork = new EFUnitOfWork(dbFactory);
         }
 
         public Video Add(Video video)

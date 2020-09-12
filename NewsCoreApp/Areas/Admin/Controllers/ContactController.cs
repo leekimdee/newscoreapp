@@ -47,7 +47,8 @@ namespace NewsCoreApp.Areas.Admin.Controllers
             }
             else
             {
-                if (string.IsNullOrEmpty(contact.Id))
+                //if (string.IsNullOrEmpty(contact.Id))
+                if(!_contactService.CheckItemExist(contact.Id))
                 {
                     _contactService.Add(contact);
                 }
