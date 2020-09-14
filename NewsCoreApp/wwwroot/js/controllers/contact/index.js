@@ -18,7 +18,44 @@
             }
         });
 
-        $('#btnSubmit').on('click', function (e) {
+        $('#btnSubmit_V2').on('click', function (e) {
+            if ($('#frmContact').valid()) {
+                e.preventDefault();
+                var name = $('#txtName').val();
+                var phone = $('#txtPhone').val();
+                var email = $('#txtEmail').val();
+                var title = $('#txtTitle').val();
+                var content = $('#txtContent').val();
+                var status = 1;
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Contact/SubmitContact",
+                    data: {
+                        Name: name,
+                        Phone: phone,
+                        Email: email,
+                        Title: title,
+                        Content: content,
+                        Status: status
+                    },
+                    dataType: "json",
+                    beforeSend: function () {
+
+                    },
+                    success: function (response) {
+                        console.log(response);
+                    },
+                    error: function () {
+
+                    }
+                });
+
+                return false;
+            }
+        });
+
+        $('#btnSubmit_V3').on('click', function (e) {
             if ($('#frmContact').valid()) {
                 e.preventDefault();
                 var name = $('#txtName').val();

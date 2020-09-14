@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using NewsCoreApp.Data.Entities;
 using Newtonsoft.Json.Linq;
+using PaulMiami.AspNetCore.Mvc.Recaptcha;
 
 namespace NewsCoreApp.Controllers
 {
@@ -17,7 +18,14 @@ namespace NewsCoreApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SubmitContact(Feedback feedback)
+        [ValidateRecaptcha]
+        public IActionResult SubmitContact(Feedback  feedback)
+        {
+            return new OkObjectResult(feedback);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SubmitContact_RecapchatV3(Feedback feedback)
         {
             string recaptchaResponse = this.Request.Form["g-recaptcha-response"];
 

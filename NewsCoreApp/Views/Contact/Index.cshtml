@@ -12,7 +12,7 @@
 }
 
 @section Scripts{
-    <script src="https://www.google.com/recaptcha/api.js?render=6LfS9csZAAAAAIPB8ysydIySKdeaDW1osl4ShCsb"></script>
+    @*<script src="https://www.google.com/recaptcha/api.js?render=6LfS9csZAAAAAIPB8ysydIySKdeaDW1osl4ShCsb"></script>*@
     <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
     <script src="~/lib/jquery-validation/dist/additional-methods.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
@@ -80,10 +80,16 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <recaptcha />
+                    <span class="text-danger" id="recaptchaErrorMessage"></span>
+                </div>
+            </div>
             @*<div class="g-recaptcha" data-sitekey="6LfS9csZAAAAAIPB8ysydIySKdeaDW1osl4ShCsb"></div>*@
             <div class="row">
                 <div class="col-md-12">
-                    <button type="button" id="btnSubmit" class="btn btn-success">Gửi liên hệ</button>
+                    <button type="submit" id="btnSubmit" class="btn btn-success">Gửi liên hệ</button>
                 </div>
             </div>
         </form>
