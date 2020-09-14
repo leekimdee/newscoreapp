@@ -1,0 +1,96 @@
+﻿
+@{
+    ViewData["Title"] = "Contact";
+}
+
+@section Styles{
+    <style type="text/css">
+        .red {
+            color: #E74C3C;
+        }
+    </style>
+}
+
+@section Scripts{
+    <script src="https://www.google.com/recaptcha/api.js?render=6LfS9csZAAAAAIPB8ysydIySKdeaDW1osl4ShCsb"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation/dist/additional-methods.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script src="~/lib/jquery-validation/localization/messages_vi.js"></script>
+
+    <recaptcha-script validation-message-element-id="recaptchaErrorMessage" />
+    <script src="~/js/controllers/contact/index.js"></script>
+    <script type="text/javascript">
+        var contact = new contactController();
+        contact.initialize();
+    </script>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15667.866778514845!2d106.84449491977541!3d10.965886500000012!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3174dc2c56248393%3A0xbf270bce14e69375!2zRE5UTiBE4buLY2ggVuG7pSBUaMawxqFuZyBN4bqhaSDEkOG6oWkgTWluaCBRdWFuZw!5e0!3m2!1svi!2s!4v1600046413896!5m2!1svi!2s" width="100%" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <h4>Gửi thông tin liên hệ</h4>
+        <form role="form" id="frmContact">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="txtName" class="control-label no-padding-right">Họ tên</label>
+                        <div>
+                            <input type="text" id="txtName" name="txtName" class="form-control" value="" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="txtPhone" class="control-label no-padding-right">Điện thoại</label>
+                        <div>
+                            <input type="text" name="txtPhone" class="form-control" id="txtPhone">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="txtEmail" class="control-label no-padding-right">Email</label>
+                        <div>
+                            <input type="text" name="txtEmail" class="form-control" id="txtEmail">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="txtTitle" class="control-label no-padding-right">Tiêu đề</label>
+                        <div>
+                            <input type="text" name="txtTitle" class="form-control" id="txtTitle">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="txtContent" class="control-label no-padding-right">Nội dung</label>
+                        <div>
+                            <input type="text" name="txtContent" class="form-control" id="txtContent">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @*<div class="g-recaptcha" data-sitekey="6LfS9csZAAAAAIPB8ysydIySKdeaDW1osl4ShCsb"></div>*@
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="button" id="btnSubmit" class="btn btn-success">Gửi liên hệ</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-6">
+        <h4>Địa chỉ</h4>
+        <p>G18B, Khu Phố 5, Phường Tân Hiệp, Tp. Biên Hòa, Đồng Nai, Việt Nam</p>
+        <p>Điện thoại: +84 61 389 56 39</p>
+    </div>
+</div>
