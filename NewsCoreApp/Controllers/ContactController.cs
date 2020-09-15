@@ -4,7 +4,10 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using NewsCoreApp.Application;
 using NewsCoreApp.Data.Entities;
+using NewsCoreApp.Data.Enums;
 using Newtonsoft.Json.Linq;
 using PaulMiami.AspNetCore.Mvc.Recaptcha;
 
@@ -12,16 +15,43 @@ namespace NewsCoreApp.Controllers
 {
     public class ContactController : Controller
     {
+        FeedbackService _feedbackService;
+        ContactService _contactService;
+
+        public ContactController()
+        {
+            _feedbackService = new FeedbackService();
+            _contactService = new ContactService();
+        }
+
         public IActionResult Index()
         {
-            return View();
+            var model = _contactService.GetByStatus(Status.Active);
+            return View(model);
         }
 
         [HttpPost]
         [ValidateRecaptcha]
-        public IActionResult SubmitContact(Feedback  feedback)
+        [ValidateAntiForgeryToken]
+        public IActionResult SubmitContact(Feedback feedback)
         {
-            return new OkObjectResult(feedback);
+            if (!ModelState.IsValid)
+            {
+                ViewData["Success"] = false;
+                IEnumerable<ModelError> allErrors = ModelState.Values.SelectMany(v => v.Errors);
+                return View();
+            }
+            else
+            {
+                feedback.Status = Status.Active;
+                feedback.CreatedDate = DateTime.Now;
+                feedback.ModifiedDate = DateTime.Now;
+                _feedbackService.Add(feedback);
+                _feedbackService.Save();
+
+                ViewData["Success"] = true;
+            }
+            return View("Index", feedback);
         }
 
         [HttpPost]

@@ -87,5 +87,10 @@ namespace NewsCoreApp.Application
         {
             return _contactRepository.CheckExist(id);
         }
+
+        public Contact GetByStatus(Status status)
+        {
+            return _contactRepository.FindSingle(x => x.Status == status);
+        }
     }
 }
