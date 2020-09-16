@@ -90,7 +90,7 @@ namespace NewsCoreApp.Application
 
         public Contact GetByStatus(Status status)
         {
-            return _contactRepository.FindSingle(x => x.Status == status);
+            return _contactRepository.FindAll(x => x.Status == status).FirstOrDefault();
         }
     }
 }

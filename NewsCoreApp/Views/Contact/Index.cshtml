@@ -1,4 +1,4 @@
-﻿@model NewsCoreApp.Data.Entities.Contact
+﻿@model NewsCoreApp.Models.ContactViewModel
 @{
     ViewData["Title"] = "Contact";
 }
@@ -33,10 +33,11 @@
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15667.866778514845!2d106.84449491977541!3d10.965886500000012!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3174dc2c56248393%3A0xbf270bce14e69375!2zRE5UTiBE4buLY2ggVuG7pSBUaMawxqFuZyBN4bqhaSDEkOG6oWkgTWluaCBRdWFuZw!5e0!3m2!1svi!2s!4v1600046413896!5m2!1svi!2s" width="100%" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
         </div>
     </div>*@
-<input type="hidden" id="hidLng" value="@Model.Lng" />
-<input type="hidden" id="hidLat" value="@Model.Lat" />
-<input type="hidden" id="hidAddress" value="@Model.Address" />
-<input type="hidden" id="hidName" value="@Model.Name" />
+<input type="hidden" id="hidEmbedCode" value="@Model.Contact.EmbedCode" />
+<input type="hidden" id="hidPhone" value="@Model.Contact.Phone" />
+<input type="hidden" id="hidEmail" value="@Model.Contact.Email" />
+<input type="hidden" id="hidAddress" value="@Model.Contact.Address" />
+<input type="hidden" id="hidName" value="@Model.Contact.Name" />
 <div class="row">
     <div class="col-md-6">
         <h4>Gửi thông tin liên hệ</h4>
@@ -67,7 +68,7 @@
                         <div class="form-group">
                             <label for="txtName" class="control-label no-padding-right">Họ tên</label>
                             <div>
-                                <input type="text" id="txtName" name="Name" class="form-control" value="" />
+                                <input type="text" id="txtName" asp-for="Feedback.Name" class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -75,7 +76,7 @@
                         <div class="form-group">
                             <label for="txtPhone" class="control-label no-padding-right">Điện thoại</label>
                             <div>
-                                <input type="text" name="Phone" class="form-control" id="txtPhone">
+                                <input type="text" class="form-control" id="txtPhone" asp-for="Feedback.Phone">
                             </div>
                         </div>
                     </div>
@@ -83,7 +84,7 @@
                         <div class="form-group">
                             <label for="txtEmail" class="control-label no-padding-right">Email</label>
                             <div>
-                                <input type="text" name="Email" class="form-control" id="txtEmail">
+                                <input type="text" class="form-control" id="txtEmail" asp-for="Feedback.Email">
                             </div>
                         </div>
                     </div>
@@ -93,7 +94,7 @@
                         <div class="form-group">
                             <label for="txtTitle" class="control-label no-padding-right">Tiêu đề</label>
                             <div>
-                                <input type="text" name="Title" class="form-control" id="txtTitle">
+                                <input type="text" class="form-control" id="txtTitle" asp-for="Feedback.Title">
                             </div>
                         </div>
                     </div>
@@ -101,7 +102,7 @@
                         <div class="form-group">
                             <label for="txtContent" class="control-label no-padding-right">Nội dung</label>
                             <div>
-                                <textarea type="text" name="Content" class="form-control" id="txtContent" rows="5"></textarea>
+                                <textarea type="text" asp-for="Feedback.Content" class="form-control" id="txtContent" rows="5"></textarea>
                             </div>
                         </div>
                     </div>
@@ -124,10 +125,10 @@
 
     </div>
     <div class="col-md-6">
-        <h4>Địa chỉ</h4>
-        <p>G18B, Khu Phố 5, Phường Tân Hiệp, Tp. Biên Hòa, Đồng Nai, Việt Nam</p>
-        <p>Điện thoại: +84 61 389 56 39</p>
-        @*<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15667.866778514845!2d106.84449491977541!3d10.965886500000012!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3174dc2c56248393%3A0xbf270bce14e69375!2zRE5UTiBE4buLY2ggVuG7pSBUaMawxqFuZyBN4bqhaSDEkOG6oWkgTWluaCBRdWFuZw!5e0!3m2!1svi!2s!4v1600046413896!5m2!1svi!2s" width="500" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>*@
-        <div id="map" style="width:100%;height:450px;"></div>
+        <h4 id="name"></h4>
+        <p id="address"></p>
+        <p id="phone"></p>
+        <p id="email"></p>
+        <iframe id="map" width="500" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
     </div>
 </div>

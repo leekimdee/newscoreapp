@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using NewsCoreApp.Application;
 using NewsCoreApp.Data.Entities;
 using NewsCoreApp.Data.Enums;
+using NewsCoreApp.Models;
 using Newtonsoft.Json.Linq;
 using PaulMiami.AspNetCore.Mvc.Recaptcha;
 
@@ -26,14 +27,15 @@ namespace NewsCoreApp.Controllers
 
         public IActionResult Index()
         {
-            var model = _contactService.GetByStatus(Status.Active);
+            var contact = _contactService.GetByStatus(Status.Active);
+            var model = new ContactViewModel { Contact = contact };
             return View(model);
         }
 
         [HttpPost]
         [ValidateRecaptcha]
         [ValidateAntiForgeryToken]
-        public IActionResult SubmitContact(Feedback feedback)
+        public IActionResult SubmitContact(ContactViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -43,15 +45,15 @@ namespace NewsCoreApp.Controllers
             }
             else
             {
-                feedback.Status = Status.Active;
-                feedback.CreatedDate = DateTime.Now;
-                feedback.ModifiedDate = DateTime.Now;
-                _feedbackService.Add(feedback);
+                model.Feedback.Status = Status.Active;
+                model.Feedback.CreatedDate = DateTime.Now;
+                model.Feedback.ModifiedDate = DateTime.Now;
+                _feedbackService.Add(model.Feedback);
                 _feedbackService.Save();
 
                 ViewData["Success"] = true;
             }
-            return View("Index", feedback);
+            return View("Index");
         }
 
         [HttpPost]

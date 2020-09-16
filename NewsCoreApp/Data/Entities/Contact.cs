@@ -25,9 +25,7 @@ namespace NewsCoreApp.Data.Entities
 
         public string Other { set; get; }
 
-        public double? Lat { set; get; }
-
-        public double? Lng { set; get; }
+        public string EmbedCode { set; get; }
 
         public Status Status { set; get; }
     }

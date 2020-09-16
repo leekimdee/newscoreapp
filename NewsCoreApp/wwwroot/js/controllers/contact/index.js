@@ -2,7 +2,6 @@
     this.initialize = function () {
         loadData();
         registerEvents();
-        initMap();
     }
 
     function registerEvents() {
@@ -11,11 +10,11 @@
             ignore: [],
             lang: 'vi',
             rules: {
-                txtPhone: { required: true },
-                txtName: { required: true },
-                txtEmail: { required: true },
-                txtTitle: { required: true },
-                txtContent: { required: true }
+                Phone: { required: true },
+                Name: { required: true },
+                Email: { required: true },
+                Title: { required: true },
+                Content: { required: true }
             }
         });
 
@@ -122,6 +121,10 @@
     }
 
     function loadData() {
-
+        $("#name").text($('#hidName').val());
+        $("#phone").text("Điện thoại: " + $('#hidPhone').val());
+        $("#address").text("Địa chỉ: " + $('#hidAddress').val());
+        $("#email").text("Email: " + $('#hidEmail').val());
+        $("#map").attr("src", $('#hidEmbedCode').val());
     }
 }
