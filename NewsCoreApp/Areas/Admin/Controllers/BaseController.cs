@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace NewsCoreApp.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    //[Authorize]
+    [Authorize]
     public class BaseController : Controller
     {
     }
