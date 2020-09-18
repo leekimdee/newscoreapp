@@ -272,7 +272,7 @@
                                 <li class="user-header">
                                     <img src="~/admin-side/images/user2-160x160.jpg" class="img-circle" alt="User Image">
                                     <p>
-                                        Alexander Pierce - Web Developer
+                                        @User.GetSpecificClaim("FullName")
                                         <small>Member since Nov. 2012</small>
                                     </p>
                                 </li>
@@ -320,7 +320,7 @@
                         <img src="~/admin-side/images/avatar.png" class="img-circle" alt="User Image">
                     </div>
                     <div class="pull-left info">
-                        <p>user name</p>
+                        <p>@User.GetSpecificClaim("FullName")</p>
                         <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                     </div>
                 </div>

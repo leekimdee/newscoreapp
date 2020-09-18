@@ -53,7 +53,10 @@ namespace NewsCoreApp.Controllers
 
                 ViewData["Success"] = true;
             }
-            return View("Index");
+
+            var contact = _contactService.GetByStatus(Status.Active);
+            model.Contact = contact;
+            return View("Index", model);
         }
 
         [HttpPost]
