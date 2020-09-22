@@ -262,46 +262,8 @@
                             </ul>
                         </li>
                         <!-- User Account: style can be found in dropdown.less -->
-                        <li class="dropdown user user-menu">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <img src="~/admin-side/images/avatar.png" class="user-image" alt="User Image">
-                                <span class="hidden-xs">@User.GetSpecificClaim("FullName")</span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <!-- User image -->
-                                <li class="user-header">
-                                    <img src="~/admin-side/images/user2-160x160.jpg" class="img-circle" alt="User Image">
-                                    <p>
-                                        @User.GetSpecificClaim("FullName")
-                                        <small>Member since Nov. 2012</small>
-                                    </p>
-                                </li>
-                                <!-- Menu Body -->
-                                <li class="user-body">
-                                    <div class="row">
-                                        <div class="col-xs-4 text-center">
-                                            <a href="#">Followers</a>
-                                        </div>
-                                        <div class="col-xs-4 text-center">
-                                            <a href="#">Sales</a>
-                                        </div>
-                                        <div class="col-xs-4 text-center">
-                                            <a href="#">Friends</a>
-                                        </div>
-                                    </div>
-                                    <!-- /.row -->
-                                </li>
-                                <!-- Menu Footer-->
-                                <li class="user-footer">
-                                    <div class="pull-left">
-                                        <a href="#" class="btn btn-default btn-flat">Profile</a>
-                                    </div>
-                                    <div class="pull-right">
-                                        <a href="#" class="btn btn-default btn-flat">Sign out</a>
-                                    </div>
-                                </li>
-                            </ul>
-                        </li>
+                        
+                        @await Html.PartialAsync("_LoginPartial")
                         <!-- Control Sidebar Toggle Button -->
                         <li>
                             <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
@@ -337,51 +299,7 @@
                 </form>
                 <!-- /.search form -->
                 <!-- sidebar menu: : style can be found in sidebar.less -->
-                <ul class="sidebar-menu" data-widget="tree">
-                    <li class="header">MAIN MENU</li>
-                    <li class="active treeview">
-                        @*<a href="#">
-                <i class="fa fa-dashboard"></i> <span>Dashboard</span>
-                <span class="pull-right-container">
-                    <i class="fa fa-angle-left pull-right"></i>
-                </span>
-            </a>*@
-                        <ul class="treeview-menu">
-                            <li class="active"><a href="~/admin/home/index"><i class="fa fa-home"></i> Trang chủ</a></li>
-                        </ul>
-                    </li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-image"></i>
-                            <span>Hình ảnh</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="~/admin/image/index"><i class="fa fa-circle-o"></i> Tất cả hình</a></li>
-                            <li><a href="~/admin/imagealbum/index"><i class="fa fa-circle-o"></i> Album hình</a></li>
-                        </ul>
-                    </li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-address-book"></i>
-                            <span>Liên hệ</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="~/admin/contact/index"><i class="fa fa-circle-o"></i> Thông tin liên hệ</a></li>
-                            <li><a href="~/admin/feedback/index"><i class="fa fa-circle-o"></i> Phản hồi khách hàng</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="~/admin/video/index">
-                            <i class="fa fa-file-video-o"></i> <span>Video</span>
-                        </a>
-                    </li>
-                </ul>
+                @await Component.InvokeAsync("SideBar")
             </section>
             <!-- /.sidebar -->
         </aside>

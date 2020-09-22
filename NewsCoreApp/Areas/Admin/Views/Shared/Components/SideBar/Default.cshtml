@@ -1,0 +1,38 @@
+﻿@model List<Function>
+<ul class="sidebar-menu" data-widget="tree">
+    <li class="header">Danh Sách Menu</li>
+    <li class="active treeview">
+        @*<a href="#">
+                <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>*@
+        <ul class="treeview-menu">
+            <li class="active"><a href="~/admin/home/index"><i class="fa fa-home"></i> Trang chủ</a></li>
+        </ul>
+    </li>
+
+    @foreach (var item in Model.Where(x => string.IsNullOrEmpty(x.ParentId)))
+    {
+        <li class="treeview">
+            <a href="@item.URL">
+                <i class="fa @item.IconCss"></i>
+                <span>@item.Name</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            @if (Model.Any(x => x.ParentId == item.Id))
+            {
+                <ul class="treeview-menu">
+                    @foreach (var jitem in Model.Where(x => x.ParentId == item.Id))
+                    {
+                        <li><a href="@jitem.URL"><i class="fa fa-circle-o"></i> @jitem.Name</a></li>
+                    }
+                </ul>
+            }
+        </li>
+    }
+
+</ul>

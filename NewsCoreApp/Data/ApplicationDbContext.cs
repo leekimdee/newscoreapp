@@ -22,6 +22,7 @@ namespace NewsCoreApp.Data
         public DbSet<Video> Videos { get; set; }
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<Feedback> Feedbacks { get; set; }
+        public DbSet<Function> Functions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
