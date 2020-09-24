@@ -4,7 +4,9 @@ using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using NewsCoreApp.Data.Configurations;
 using NewsCoreApp.Data.Entities;
+using NewsCoreApp.Data.Extensions;
 
 namespace NewsCoreApp.Data
 {
@@ -23,6 +25,7 @@ namespace NewsCoreApp.Data
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<Feedback> Feedbacks { get; set; }
         public DbSet<Function> Functions { get; set; }
+        public DbSet<Permission> Permissions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -42,7 +45,7 @@ namespace NewsCoreApp.Data
                .HasKey(x => new { x.UserId });
 
             #endregion Identity Config
-
+            builder.AddConfiguration(new FunctionConfiguration());
             //base.OnModelCreating(builder);
         }
     }
