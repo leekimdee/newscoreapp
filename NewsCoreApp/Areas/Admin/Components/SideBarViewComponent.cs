@@ -24,14 +24,14 @@ namespace NewsCoreApp.Areas.Admin.Components
         {
             var roles = ((ClaimsPrincipal)User).GetSpecificClaim("Roles");
             List<Function> functions;
-            if (roles.Split(";").Contains(CommonConstants.AdminRole))
+            if (roles.Split(";").Contains(CommonConstants.AppRole.AdminRole))
             {
                 functions = await _functionService.GetAll();
             }
             else
             {
                 //TODO: Get by permission
-                functions = new List<Function>();
+                functions = await _functionService.GetAll();
             }
             return View(functions);
         }

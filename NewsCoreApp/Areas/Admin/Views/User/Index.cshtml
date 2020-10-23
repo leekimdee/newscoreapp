@@ -1,4 +1,7 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Authorization
+@using NewsCoreApp.Authorization
+@inject IAuthorizationService AuthorizationService
+@{
     ViewData["Title"] = "Danh sách user";
 }
 @section Scripts{
@@ -28,7 +31,14 @@
                 <div class="box-header with-border">
                     <h3 class="box-title">Tất cả User</h3>
                     <div class="box-tools">
-                        <button id="btnCreate" class="btn btn-default"><i class="fa fa-plus"></i>Thêm mới</button>
+                        @{
+                            var result = await AuthorizationService.AuthorizeAsync(User, "USER", Operations.Create);
+                        }
+                        @if (result.Succeeded)
+                        {
+                            <button id="btnCreate" class="btn btn-default"><i class="fa fa-plus"></i>Thêm mới</button>
+                        }
+                        
                     </div>
                 </div>
                 <!-- /.box-header -->
@@ -66,10 +76,18 @@
         <td>{{{CreatedDate}}}</td>
         <td>{{{Status}}}</td>
         <td>
-            <a href="#" data-id="{{Id}}" class="btn-edit"><i class="fa fa-pencil-square-o"></i></a>
+            @if ((await AuthorizationService.AuthorizeAsync(User, "USER", Operations.Update)).Succeeded)
+            {
+                <a href = "#" data - id = "{{Id}}" class="btn-edit"><i class="fa fa-pencil-square-o"></i></a>
+            }
+            
         </td>
         <td>
-            <a href="#" data-id="{{Id}}" class="btn-delete"><i class="fa fa-trash-o"></i></a>
+            @if ((await AuthorizationService.AuthorizeAsync(User, "USER", Operations.Delete)).Succeeded)
+            {
+                <a href = "#" data - id = "{{Id}}" class="btn-delete"><i class="fa fa-trash-o"></i></a>
+            }
+            
         </td>
     </tr>
 </script>

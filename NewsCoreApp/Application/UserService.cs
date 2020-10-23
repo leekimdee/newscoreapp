@@ -16,9 +16,11 @@ namespace NewsCoreApp.Application
     public class UserService : IUserService
     {
         private readonly UserManager<AppUser> _userManager;
-        public UserService(UserManager<AppUser> userManager)
+        private IUserRoleService _userRoleService;
+        public UserService(UserManager<AppUser> userManager, IUserRoleService userRoleService)
         {
             _userManager = userManager;
+            _userRoleService = userRoleService;
         }
 
         public async Task<bool> AddAsync(AppUserViewModel userVm)
@@ -111,7 +113,8 @@ namespace NewsCoreApp.Application
             if (result.Succeeded)
             {
                 string[] needRemoveRoles = currentRoles.Except(userVm.Roles).ToArray();
-                await _userManager.RemoveFromRolesAsync(user, needRemoveRoles);
+                //await _userManager.RemoveFromRolesAsync(user, needRemoveRoles);
+                await _userRoleService.RemoveRolesOfUserAsync(user.Id.ToString(), string.Join(",", needRemoveRoles));
 
                 //Update user detail
                 user.FullName = userVm.FullName;
