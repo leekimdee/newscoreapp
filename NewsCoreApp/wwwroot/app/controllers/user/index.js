@@ -42,7 +42,8 @@
             loadData(true);
         });
 
-        $("#btn-create").on('click', function () {
+        $("#btnCreate").on('click', function () {
+            //alert("abc");
             resetFormMaintainance();
             initRoleList();
             $('#modal-add-edit').modal('show');

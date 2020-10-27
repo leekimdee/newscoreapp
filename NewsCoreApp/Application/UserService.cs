@@ -30,7 +30,8 @@ namespace NewsCoreApp.Application
                 Email = userVm.Email,
                 FullName = userVm.FullName,
                 CreatedDate = DateTime.Now,
-                PhoneNumber = userVm.PhoneNumber
+                PhoneNumber = userVm.PhoneNumber,
+                Status = userVm.Status
             };
             var result = await _userManager.CreateAsync(user, userVm.Password);
             if (result.Succeeded && userVm.Roles.Count > 0)
@@ -105,13 +106,15 @@ namespace NewsCoreApp.Application
             //Remove current roles in db
             var currentRoles = await _userManager.GetRolesAsync(user);
 
-            var result = await _userManager.AddToRolesAsync(user,
-                userVm.Roles.Except(currentRoles).ToArray());
+            var needAddRoles = userVm.Roles.Except(currentRoles).ToArray();
+
+            var result = await _userManager.AddToRolesAsync(user, needAddRoles);
 
             if (result.Succeeded)
             {
                 string[] needRemoveRoles = currentRoles.Except(userVm.Roles).ToArray();
-                await _userManager.RemoveFromRolesAsync(user, needRemoveRoles);
+
+                result = await _userManager.RemoveFromRolesAsync(user, needRemoveRoles);
 
                 //Update user detail
                 user.FullName = userVm.FullName;

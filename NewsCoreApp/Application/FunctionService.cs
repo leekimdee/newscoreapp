@@ -75,6 +75,26 @@ namespace NewsCoreApp.Application
             return _functionRepository.FindAll(x => x.ParentId == null).OrderBy(y => y.SortOrder).ToList();
         }
 
+        public IEnumerable<Function> GetAllWithParentId(string parentId)
+        {
+            return _functionRepository.FindAll(x => x.ParentId == parentId).ToList();
+        }
+
+        public void ReOrder(string sourceId, string targetId)
+        {
+
+            var source = _functionRepository.FindById(sourceId);
+            var target = _functionRepository.FindById(targetId);
+            int tempOrder = source.SortOrder;
+
+            source.SortOrder = target.SortOrder;
+            target.SortOrder = tempOrder;
+
+            _functionRepository.Update(source);
+            _functionRepository.Update(target);
+
+        }
+
         public Function GetById(string id)
         {
             return _functionRepository.FindById(id);
@@ -90,9 +110,30 @@ namespace NewsCoreApp.Application
             _functionRepository.Update(function);
         }
 
+        public void UpdateParentId(string sourceId, string targetId, Dictionary<string, int> items)
+        {
+            //Update parent id for source
+            var category = _functionRepository.FindById(sourceId);
+            category.ParentId = targetId;
+            _functionRepository.Update(category);
+
+            //Get all sibling
+            var sibling = _functionRepository.FindAll(x => items.ContainsKey(x.Id));
+            foreach (var child in sibling)
+            {
+                child.SortOrder = items[child.Id];
+                _functionRepository.Update(child);
+            }
+        }
+
         public bool CheckItemExist(string id)
         {
             return _functionRepository.CheckExist(id);
+        }
+
+        public bool CheckExistedId(string id)
+        {
+            return _functionRepository.FindById(id) != null;
         }
     }
 }

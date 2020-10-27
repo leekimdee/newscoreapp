@@ -15,24 +15,29 @@
 
     @foreach (var item in Model.Where(x => string.IsNullOrEmpty(x.ParentId)))
     {
-        <li class="treeview">
-            <a href="@item.URL">
-                <i class="fa @item.IconCss"></i>
-                <span>@item.Name</span>
-                <span class="pull-right-container">
-                    <i class="fa fa-angle-left pull-right"></i>
-                </span>
-            </a>
-            @if (Model.Any(x => x.ParentId == item.Id))
-            {
+
+        @if (Model.Any(x => x.ParentId == item.Id))
+        {
+            <li class="treeview">
+                <a href="@item.URL">
+                    <i class="fa @item.IconCss"></i>
+                    <span>@item.Name</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
                 <ul class="treeview-menu">
                     @foreach (var jitem in Model.Where(x => x.ParentId == item.Id))
                     {
                         <li><a href="@jitem.URL"><i class="fa fa-circle-o"></i> @jitem.Name</a></li>
                     }
                 </ul>
-            }
-        </li>
+            </li>
+        }
+        else
+        {
+            <li><a href="@item.URL"><i class="fa @item.IconCss"></i> @item.Name</a></li>
+        }
     }
 
 </ul>
