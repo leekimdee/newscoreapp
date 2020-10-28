@@ -90,6 +90,7 @@ namespace NewsCoreApp
 
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IRoleService, RoleService>();
+            services.AddTransient<IUserRoleService, UserRoleService>();
 
             services.AddMvc().AddJsonOptions(options =>
             {

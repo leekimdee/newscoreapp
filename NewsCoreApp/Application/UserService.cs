@@ -16,9 +16,11 @@ namespace NewsCoreApp.Application
     public class UserService : IUserService
     {
         private readonly UserManager<AppUser> _userManager;
-        public UserService(UserManager<AppUser> userManager)
+        private IUserRoleService _userRoleService;
+        public UserService(UserManager<AppUser> userManager, IUserRoleService userRoleService)
         {
             _userManager = userManager;
+            _userRoleService = userRoleService;
         }
 
         public async Task<bool> AddAsync(AppUserViewModel userVm)
@@ -30,8 +32,7 @@ namespace NewsCoreApp.Application
                 Email = userVm.Email,
                 FullName = userVm.FullName,
                 CreatedDate = DateTime.Now,
-                PhoneNumber = userVm.PhoneNumber,
-                Status = userVm.Status
+                PhoneNumber = userVm.PhoneNumber
             };
             var result = await _userManager.CreateAsync(user, userVm.Password);
             if (result.Succeeded && userVm.Roles.Count > 0)
@@ -106,15 +107,14 @@ namespace NewsCoreApp.Application
             //Remove current roles in db
             var currentRoles = await _userManager.GetRolesAsync(user);
 
-            var needAddRoles = userVm.Roles.Except(currentRoles).ToArray();
-
-            var result = await _userManager.AddToRolesAsync(user, needAddRoles);
+            var result = await _userManager.AddToRolesAsync(user,
+                userVm.Roles.Except(currentRoles).ToArray());
 
             if (result.Succeeded)
             {
                 string[] needRemoveRoles = currentRoles.Except(userVm.Roles).ToArray();
-
-                result = await _userManager.RemoveFromRolesAsync(user, needRemoveRoles);
+                //await _userManager.RemoveFromRolesAsync(user, needRemoveRoles);
+                await _userRoleService.RemoveRolesOfUserAsync(user.Id.ToString(), string.Join(",", needRemoveRoles));
 
                 //Update user detail
                 user.FullName = userVm.FullName;
