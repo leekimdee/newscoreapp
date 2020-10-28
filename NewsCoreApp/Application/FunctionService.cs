@@ -38,13 +38,17 @@ namespace NewsCoreApp.Application
             return _functionRepository.FindAll().OrderBy(x => x.Id).ToListAsync();
         }
 
-        public List<Function> GetAll(string keyword)
+        public Task<List<Function>> GetAll(string keyword)
         {
+            //if (!string.IsNullOrEmpty(keyword))
+            //    return _functionRepository.FindAll(x => x.Name.Contains(keyword))
+            //        .OrderBy(x => x.Id).ToList();
+            //else
+            //    return _functionRepository.FindAll().OrderBy(x => x.Id).ToList();
+            var query = _functionRepository.FindAll(x => x.Status == Status.Active);
             if (!string.IsNullOrEmpty(keyword))
-                return _functionRepository.FindAll(x => x.Name.Contains(keyword))
-                    .OrderBy(x => x.Id).ToList();
-            else
-                return _functionRepository.FindAll().OrderBy(x => x.Id).ToList();
+                query = query.Where(x => x.Name.Contains(keyword));
+            return query.OrderBy(x => x.ParentId).ToListAsync();
         }
 
         public PagedResult<Function> GetAllPaging(string keyword, int page, int pageSize)
